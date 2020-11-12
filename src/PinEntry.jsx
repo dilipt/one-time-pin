@@ -17,12 +17,7 @@ export const PinEntry = () => {
 
   return (
     <Container>
-      <PinDigit changeHandler={onUpdate(0)} />
-      <PinDigit changeHandler={onUpdate(1)} />
-      <PinDigit changeHandler={onUpdate(2)} />
-      <PinDigit changeHandler={onUpdate(3)} />
-      <PinDigit changeHandler={onUpdate(4)} />
-      <PinDigit changeHandler={onUpdate(5)} />
+      {pin.map((_, i) => <PinDigit position={i} changeHandler={onUpdate(i)} />)}
     </Container>
   );
 };

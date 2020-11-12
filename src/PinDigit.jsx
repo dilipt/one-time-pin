@@ -5,18 +5,18 @@ import { Colours } from './Theme';
 
 const Input = styled.input`
   font-size: 16px;
-  padding: 25px 25px;
   border: 1px solid ${Colours.PURPLE_MOUNTAIN_MAJESTY};
   width: 60px;
   height: 60px;
+  text-align: center;
 `;
 
-export const PinDigit = ({ changeHandler }) => {
+export const PinDigit = ({ position, changeHandler }) => {
   const [value, setValue] = useState('');
 
   const valueChanged = (e) => {
     setValue(e.target.value);
-    if (changeHandler) changeHandler(e.target.value);
+    changeHandler(e.target.value);
   };
 
   return (
@@ -26,4 +26,5 @@ export const PinDigit = ({ changeHandler }) => {
 
 PinDigit.propTypes = {
   changeHandler: PropTypes.func.isRequired,
+  position: PropTypes.number.isRequired,
 };
