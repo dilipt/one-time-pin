@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Colours } from './Theme';
@@ -9,22 +9,21 @@ const Input = styled.input`
   width: 60px;
   height: 60px;
   text-align: center;
+  border-radius: 3px;
 `;
 
-export const PinDigit = ({ position, changeHandler }) => {
-  const [value, setValue] = useState('');
-
-  const valueChanged = (e) => {
-    setValue(e.target.value);
+export function PinDigit({ value, changeHandler, pasteHandler }) {
+  function valueChanged(e) {
     changeHandler(e.target.value);
-  };
+  }
 
   return (
-    <Input type="text" maxLength="1" pattern="\d" onChange={valueChanged} value={value} />
+    <Input type="text" maxLength="1" pattern="\d" onChange={valueChanged} onPaste={pasteHandler} value={value} />
   );
-};
+}
 
 PinDigit.propTypes = {
+  value: PropTypes.string.isRequired,
   changeHandler: PropTypes.func.isRequired,
-  position: PropTypes.number.isRequired,
+  pasteHandler: PropTypes.func.isRequired,
 };

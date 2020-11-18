@@ -30,14 +30,30 @@ const Heading = styled.div`
   color: ${Colours.LAVENDER_BLUSH};
 `;
 
-export const OneTimePin = ({ email }) => (
-  <Background>
-    <Container>
-      <Heading>Please enter the PIN that was sent to {email}:</Heading>
-      <PinEntry />
-    </Container>
-  </Background>
-);
+const SubmitButton = styled.button`
+  background-color: ${Colours.BLUE_BELL};
+  width: 150px;
+  padding: 12px 20px;
+  border: 1px solid ${Colours.BLUE_BELL};
+  border-radius: 3px;
+  color: ${Colours.LAVENDER_BLUSH};
+`;
+
+export function OneTimePin({ email }) {
+  function onSubmit(e) {
+    alert(e.target.value);
+  }
+
+  return (
+    <Background>
+      <Container>
+        <Heading>Please enter the PIN that was sent to {email}:</Heading>
+        <PinEntry />
+        <SubmitButton onClick={onSubmit}>Submit</SubmitButton>
+      </Container>
+    </Background>
+  );
+}
 
 OneTimePin.propTypes = {
   email: PropTypes.string.isRequired,

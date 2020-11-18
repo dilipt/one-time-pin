@@ -8,16 +8,21 @@ const Container = styled.div`
   width: 30vw;
 `;
 
-export const PinEntry = () => {
+export function PinEntry() {
   const [pin, setPin] = useState(['', '', '', '', '', '']);
 
-  const onUpdate = (index) => (value) => {
-    setPin(pin.map((originalValue, idx) => (idx === index ? value : originalValue)));
-  };
+  function onUpdate(indexOfUpdatedDigit) {
+    return (value) => setPin(pin.map((originalValue, idx) => (idx === indexOfUpdatedDigit ? value : originalValue)));
+  }
+
+  function onPaste(e) {
+    const digits = e.clipboardData.getData('Text');
+    if (digits.length === pin.length) setPin(digits.split(''));
+  }
 
   return (
     <Container>
-      {pin.map((_, i) => <PinDigit position={i} changeHandler={onUpdate(i)} />)}
+      {pin.map((digit, i) => <PinDigit position={i} value={digit} changeHandler={onUpdate(i)} pasteHandler={onPaste} />)}
     </Container>
   );
-};
+}

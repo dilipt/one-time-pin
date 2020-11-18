@@ -20,5 +20,7 @@ module.exports = {
   ],
   rules: {
     'import/prefer-default-export': 'off',
+    'max-len': ['error', { code: 150 }],
+    'object-curly-newline': 'off',
   },
 };
