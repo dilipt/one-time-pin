@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Colours } from './Theme';
@@ -12,15 +12,15 @@ const Input = styled.input`
   border-radius: 3px;
 `;
 
-export function PinDigit({ value, changeHandler, pasteHandler }) {
-  function valueChanged(e) {
+export const PinDigit = forwardRef(({ value, changeHandler, pasteHandler }, ref) => {
+  const valueChanged = (e) => {
     changeHandler(e.target.value);
-  }
+  };
 
   return (
-    <Input type="text" maxLength="1" pattern="\d" onChange={valueChanged} onPaste={pasteHandler} value={value} />
+    <Input type="text" ref={ref} maxLength="1" pattern="\d" onChange={valueChanged} onPaste={pasteHandler} value={value} />
   );
-}
+});
 
 PinDigit.propTypes = {
   value: PropTypes.string.isRequired,
