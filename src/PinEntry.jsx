@@ -17,16 +17,31 @@ const SubmitButton = styled.button`
   border: 1px solid ${Colours.BLUE_BELL};
   border-radius: 3px;
   color: ${Colours.LAVENDER_BLUSH};
+  cursor: pointer;
+  :disabled {
+    cursor: not-allowed;
+  }
 `;
+
+const pinRegex = new RegExp(/^\d{6}$/);
 
 export const PinEntry = ({ submitHandler }) => {
   const [pin, setPin] = useState(['', '', '', '', '', '']);
   const refs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)];
-  const submitRef = useRef(null);
+  const submitBtn = useRef(null);
 
-  const onUpdate = (indexOfUpdatedDigit) => (value) => {
-    refs[(indexOfUpdatedDigit + 1) % 6].current.focus();
-    setPin(pin.map((originalValue, idx) => (idx === indexOfUpdatedDigit ? value : originalValue)));
+  const onUpdate = (digitIdx) => (newValue) => {
+    if (newValue === 'Backspace') {
+      if (pin[digitIdx] === '') {
+        setPin(pin.map((value, i) => (i === digitIdx - 1 ? '' : value)));
+        refs[(digitIdx === 0 ? 0 : digitIdx - 1)].current.focus();
+      } else {
+        setPin(pin.map((value, i) => (i === digitIdx ? '' : value)));
+      }
+    } else {
+      setPin(pin.map((value, i) => (i === digitIdx ? newValue : value)));
+      refs[(digitIdx + 1) % 6].current.focus();
+    }
   };
 
   const onPaste = (e) => {
@@ -35,8 +50,12 @@ export const PinEntry = ({ submitHandler }) => {
   };
 
   useEffect(() => {
-    if (pin.join('').length === pin.length) {
-      submitRef.current.focus();
+    const pinToSubmit = pin.join('');
+    if (pinToSubmit.length === refs.length && pinRegex.test(pinToSubmit)) {
+      submitBtn.current.removeAttribute('disabled');
+      submitBtn.current.focus();
+    } else {
+      submitBtn.current.setAttribute('disabled', true);
     }
   }, [pin]);
 
@@ -47,9 +66,17 @@ export const PinEntry = ({ submitHandler }) => {
   return (
     <>
       <PinContainer>
-        {pin.map((digit, i) => <PinDigit ref={refs[i]} position={i} value={digit} changeHandler={onUpdate(i)} pasteHandler={onPaste} />)}
+        {pin.map((digit, i) => (
+          <PinDigit
+            ref={refs[i]}
+            position={i}
+            value={digit}
+            changeHandler={onUpdate(i)}
+            pasteHandler={onPaste}
+          />
+        ))}
       </PinContainer>
-      <SubmitButton ref={submitRef} onClick={submitHandler(pin.join(''))}>Submit</SubmitButton>
+      <SubmitButton ref={submitBtn} onClick={submitHandler(pin.join(''))}>Submit</SubmitButton>
     </>
   );
 };

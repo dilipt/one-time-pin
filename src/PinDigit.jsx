@@ -14,11 +14,28 @@ const Input = styled.input`
 
 export const PinDigit = forwardRef(({ value, changeHandler, pasteHandler }, ref) => {
   const valueChanged = (e) => {
-    changeHandler(e.target.value);
+    if (e.target.value !== '') {
+      changeHandler(e.target.value);
+    }
+  };
+
+  const checkKey = (e) => {
+    if (e.key === 'Backspace') {
+      changeHandler(e.key);
+    }
   };
 
   return (
-    <Input type="text" ref={ref} maxLength="1" pattern="\d" onChange={valueChanged} onPaste={pasteHandler} value={value} />
+    <Input
+      type="text"
+      ref={ref}
+      maxLength="1"
+      pattern="\d{1}"
+      onKeyDown={checkKey}
+      onChange={valueChanged}
+      onPaste={pasteHandler}
+      value={value}
+    />
   );
 });
 
