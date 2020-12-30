@@ -22,5 +22,6 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'max-len': ['error', { code: 150 }],
     'object-curly-newline': 'off',
+    'object-curly-spacing': 'never',
   },
 };

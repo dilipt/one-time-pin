@@ -2,8 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { PinEntry } from './PinEntry';
-import { Colours } from './Theme';
+import {PinEntry} from './PinEntry';
+import {Colours} from './Theme';
 
 const Background = styled.div`
   height: 100vh;
@@ -30,7 +30,7 @@ const Heading = styled.div`
   color: ${Colours.LAVENDER_BLUSH};
 `;
 
-export const OneTimePin = ({ email }) => {
+export function OneTimePin({email}) {
   const onSubmit = (value) => () => alert(value);
 
   return (
@@ -41,7 +41,7 @@ export const OneTimePin = ({ email }) => {
       </Container>
     </Background>
   );
-};
+}
 
 OneTimePin.propTypes = {
   email: PropTypes.string.isRequired,

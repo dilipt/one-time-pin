@@ -1,7 +1,7 @@
-import React, { forwardRef } from 'react';
+import React, {forwardRef} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Colours } from './Theme';
+import {Colours} from './Theme';
 
 const Input = styled.input`
   font-size: 16px;
@@ -12,14 +12,14 @@ const Input = styled.input`
   border-radius: 3px;
 `;
 
-export const PinDigit = forwardRef(({ value, changeHandler, pasteHandler }, ref) => {
-  const valueChanged = (e) => {
+export const PinDigit = forwardRef(({value, changeHandler, pasteHandler}, ref) => {
+  function valueChanged(e) {
     if (e.target.value !== '') {
       changeHandler(e.target.value);
     }
   };
 
-  const checkKey = (e) => {
+  function checkKey(e) {
     if (e.key === 'Backspace') {
       changeHandler(e.key);
     }
